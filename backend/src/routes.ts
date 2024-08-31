@@ -13,7 +13,12 @@ import { CreateProductController } from "./controllers/product/CreateProductCont
 import uploadConfig from "./config/multer"
 import { AddItemController } from "./controllers/order/AddItemController"
 import { CreateOrderController } from "./controllers/order/CreateOrderController"
+import { DetailOrderController } from "./controllers/order/DetailOrderController"
+import { FinishOrderController } from "./controllers/order/FinishOrderController"
+import { ListOrdersController } from "./controllers/order/ListOrdersController"
+import { RemoveItemController } from "./controllers/order/RemoveItemController"
 import { RemoveOrderController } from "./controllers/order/RemoveOrderController"
+import { SendOrderController } from "./controllers/order/SendOrderController"
 import { ListByCategoryController } from "./controllers/product/ListByCategoryController"
 
 const router = Router()
@@ -45,6 +50,19 @@ router.get(
 // Rotas ORDERS
 router.post("/order", isAuthenticated, new CreateOrderController().handle)
 router.delete("/order", isAuthenticated, new RemoveOrderController().handle)
+
 router.post("/order/add", isAuthenticated, new AddItemController().handle)
+router.delete(
+  "/order/remove",
+  isAuthenticated,
+  new RemoveItemController().handle
+)
+
+router.put("/order/send", isAuthenticated, new SendOrderController().handle)
+
+router.get("/orders", isAuthenticated, new ListOrdersController().handle)
+router.get("/order/detail", isAuthenticated, new DetailOrderController().handle)
+
+router.put("/order/finish", isAuthenticated, new FinishOrderController().handle)
 
 export { router }
